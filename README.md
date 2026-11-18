@@ -4,6 +4,11 @@ A self-contained local recreation of the Heaven Essence Ice Creams website,
 built from the reference at
 <https://project-leader-overview-703620.onhercules.app>.
 
+> **Deployed on cPanel:** the live site uses `php-backend/` (PHP 8.5 + MySQL)
+> because the hosting account has no Python 3.12+ / Node support. The Django
+> `backend/` remains available for local development. See
+> [`php-backend/README.md`](php-backend/README.md).
+
 ## Pages
 
 | Route | What it is |

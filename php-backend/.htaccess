@@ -1,0 +1,19 @@
+# Place this file in the API folder on cPanel.
+RewriteEngine On
+RewriteBase /
+
+# API requests -> front controller
+RewriteRule ^api/?$ index.php [QSA,L]
+RewriteRule ^api/(.*)$ index.php [QSA,L]
+
+# Admin panel
+RewriteRule ^admin/?$ admin/index.php [QSA,L]
+RewriteRule ^admin/(.*)$ admin/index.php [QSA,L]
+
+# Health check without /api prefix (handy for monitoring)
+RewriteRule ^health/?$ index.php [QSA,L]
+
+# Keep private files private
+<FilesMatch "^(config\.php|setup\.php|database\.sql|lib\.php)$">
+    Require all denied
+</FilesMatch>
