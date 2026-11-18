@@ -7,6 +7,9 @@ const zlib = require('zlib');
 
 const ROOT = __dirname;
 const PORT = Number(process.env.PORT) || 4173;
+// The Django API is proxied at /api and /admin so the browser only ever talks
+// to one origin — this keeps forms working through the public share tunnel.
+const API_TARGET = process.env.API_TARGET || 'http://localhost:8000';
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -31,12 +34,41 @@ function compressed(file) {
   return buf;
 }
 
+function proxyToApi(req, res, pathname) {
+  const target = new URL(API_TARGET);
+  const options = {
+    hostname: target.hostname,
+    port: target.port || 80,
+    path: req.url,
+    method: req.method,
+    headers: { ...req.headers, host: target.host },
+  };
+  const upstream = http.request(options, (upstreamRes) => {
+    const headers = { ...upstreamRes.headers };
+    delete headers['content-encoding']; // we forward the already-compressed bytes as-is
+    res.writeHead(upstreamRes.statusCode || 502, headers);
+    upstreamRes.pipe(res);
+  });
+  upstream.on('error', () => {
+    res.writeHead(502, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ detail: 'API is currently unavailable.' }));
+  });
+  req.pipe(upstream);
+}
+
 http.createServer((req, res) => {
   let pathname;
   try {
     pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   } catch {
     res.writeHead(400).end('Bad request');
+    return;
+  }
+
+  if (pathname === '/api' || pathname.startsWith('/api/') ||
+      pathname === '/admin' || pathname.startsWith('/admin/') ||
+      pathname === '/static/' || pathname.startsWith('/static/')) {
+    proxyToApi(req, res, pathname);
     return;
   }
 

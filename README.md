@@ -26,7 +26,26 @@ node server.js
 ```
 
 Then open <http://localhost:4173>. The server gzips text assets and serves the
-directories as clean routes.
+directories as clean routes. It also proxies `/api`, `/admin` and `/static` to
+the Django backend on port 8000, so the browser only talks to one origin.
+
+## Backend
+
+See [`backend/README.md`](backend/README.md) for the Django REST API. Start it
+alongside the frontend:
+
+```bash
+cd backend && source .venv/bin/activate && python manage.py runserver 0.0.0.0:8000
+```
+
+### Connected forms
+
+- `/events` → `POST /api/enquiries/` — catering/events enquiry form
+- `/visit` → `POST /api/orders/` — quick order form
+- `/visit` → `POST /api/contact/` — contact message form
+
+`assets/forms.js` submits them as JSON through the same-origin proxy and shows
+inline success/error messages. Submissions appear in `/admin/` immediately.
 
 ## Assets
 
