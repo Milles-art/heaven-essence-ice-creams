@@ -5,8 +5,8 @@ from rest_framework.response import Response
 
 from .models import Category, FAQ, Flavour, GalleryImage, SiteSetting, Testimonial
 from .serializers import (
-    CategorySerializer, FAQSerializer, FlavourSerializer,
-    GalleryImageSerializer, SiteSettingSerializer, TestimonialSerializer,
+    CategorySerializer, FAQSerializer, FlavourSerializer, GalleryImageSerializer,
+    SiteSettingSerializer, TestimonialSerializer,
 )
 
 

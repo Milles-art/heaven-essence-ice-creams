@@ -27,7 +27,7 @@ FAQS = [
     ("Do you cater weddings and events?", "We do! Scoop stations, party tubs and custom carts are all available. Head to the Events page or message us for a quote."),
     ("Can I request a custom flavour?", "For events we can often create a custom batch. Get in touch early and we'll talk through what you have in mind."),
     ("How do I pay?", "Payment is simple — pay on delivery or send it via mobile money. We'll confirm the details when you order."),
-    ("What are your opening hours?", "Every day, 10:00 AM to 9:00 PM. Come by, or message us any time and we'll reply as soon as we can."),
+    ("What are your opening hours?", "Every day, 8:00 AM to 9:00 PM. Come by, or message us any time and we'll reply as soon as we can."),
 ]
 
 TESTIMONIALS = [
@@ -61,12 +61,16 @@ GALLERY = [
 
 SETTINGS = [
     ("site_name", "Heaven Essence Ice Creams"),
-    ("location", "Morogoro, Tanzania"),
-    ("phone", "+255 700 000 000"),
-    ("whatsapp", "255700000000"),
+    ("parent_business", "Family Choice Supermarket"),
+    ("location", "Mafiga Shell, Morogoro, Tanzania"),
+    ("phone", "+255 768 641 810"),
+    ("whatsapp", "255768641810"),
+    ("email", "info@familychoiceminimarket.co.tz"),
     ("instagram", "https://instagram.com"),
-    ("opening_hours", "Daily, 10:00 AM – 9:00 PM"),
+    ("opening_hours", "Daily, 8:00 AM – 9:00 PM"),
     ("delivery_area", "Across Morogoro town"),
+    ("delivery_info", "Delivery times are flexible and arranged with the store. Contact us to agree a suitable time."),
+    ("pickup_info", "Order ahead and collect from the store."),
 ]
 
 

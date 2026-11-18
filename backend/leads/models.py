@@ -32,6 +32,19 @@ class Order(models.Model):
         return f"#{self.pk} — {self.customer_name} ({self.quantity}x {self.flavour or self.product_type})"
 
 
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
+    flavour = models.CharField(max_length=80)
+    product_type = models.CharField(max_length=20, default="cup")
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        ordering = ["id"]
+
+    def __str__(self):
+        return f"{self.quantity}x {self.flavour} ({self.product_type})"
+
+
 class EventEnquiry(models.Model):
     EVENT_CHOICES = [
         ("wedding", "Wedding"),

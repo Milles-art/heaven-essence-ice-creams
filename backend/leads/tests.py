@@ -32,7 +32,7 @@ class LeadTests(APITestCase):
     def test_order_can_be_created_publicly(self):
         payload = {
             "customer_name": "Amina",
-            "phone": "+255700000000",
+            "phone": "+255768641810",
             "flavour": "Ukwaju",
             "product_type": "tub",
             "quantity": 2,
@@ -48,12 +48,12 @@ class LeadTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_enquiry_can_be_created(self):
-        payload = {"name": "Daniel", "phone": "0700000000", "event_type": "birthday", "guests": 30}
+        payload = {"name": "Daniel", "phone": "0711111111", "event_type": "birthday", "guests": 30}
         res = self.client.post("/api/enquiries/", payload, format="json")
         self.assertEqual(res.status_code, status.HTTP_201_CREATED, res.content)
 
     def test_leads_are_private(self):
-        self.client.post("/api/orders/", {"customer_name": "A", "phone": "0700000000"}, format="json")
+        self.client.post("/api/orders/", {"customer_name": "A", "phone": "0711111111"}, format="json")
         res = self.client.get("/api/orders/")
         self.assertIn(res.status_code, (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN))
 
@@ -64,3 +64,30 @@ class LeadTests(APITestCase):
         self.client.login(username="staff", password="pw")
         res = self.client.get("/api/dashboard/")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_multi_item_order(self):
+        payload = {
+            "customer_name": "Neema", "phone": "0700000002",
+            "items": [
+                {"flavour": "Vanilla", "product_type": "cup", "quantity": 2},
+                {"flavour": "Mango", "product_type": "tub", "quantity": 1},
+            ],
+        }
+        res = self.client.post("/api/orders/", payload, format="json")
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED, res.content)
+        self.assertEqual(res.json()["quantity"], 3)
+        from .models import Order
+        self.assertEqual(Order.objects.get(pk=res.json()["id"]).items.count(), 2)
+
+    def test_health_endpoint(self):
+        res = self.client.get("/api/health/")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.json()["status"], "ok")
+
+    def test_token_authentication(self):
+        User.objects.create_user("apiusers", password="secret123", is_staff=True)
+        res = self.client.post("/api/token/", {"username": "apiusers", "password": "secret123"}, format="json")
+        self.assertEqual(res.status_code, status.HTTP_200_OK, res.content)
+        token = res.json()["token"]
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token)
+        self.assertEqual(self.client.get("/api/dashboard/").status_code, status.HTTP_200_OK)

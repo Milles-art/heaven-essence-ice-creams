@@ -55,16 +55,59 @@ Base URL: `http://localhost:8000`
 
 | Method | Endpoint | Notes |
 | --- | --- | --- |
-| GET | `/api/orders/` | List/filter orders |
+| GET | `/api/orders/` | List/filter orders (each can contain multiple `items`) |
 | PATCH | `/api/orders/<id>/status/` | Update order status |
 | GET | `/api/enquiries/` | List enquiries |
 | PATCH | `/api/enquiries/<id>/status/` | Update enquiry status |
 | GET | `/api/contact/` | List messages |
+| PATCH | `/api/contact/<id>/read/` | Mark a message as read |
 | GET | `/api/dashboard/` | Counts for an admin dashboard |
 
-Use Django's session login (`/admin/login/`) or a logged-in session to call
-staff endpoints from a browser. Catalogue writes are disabled entirely — edit
-catalogue data in the admin panel at **`/admin/`**.
+Also public: `GET /api/health/` returns `{"status":"ok"}`.
+
+### Staff API tokens
+
+```bash
+curl -X POST http://localhost:8000/api/token/ \
+  -d 'username=admin&password=<password>'
+# => {"token":"..."}
+curl -H 'Authorization: Token <token>' http://localhost:8000/api/orders/
+```
+
+Use Django's session login (`/admin/login/`), a logged-in session, or the token
+above to call staff endpoints. Catalogue writes are disabled entirely — edit
+catalogue data in the admin panel at **`/admin/`**, where each list also has a
+**CSV export** action. New submissions send an email notification (console
+backend in development; configure SMTP with the `EMAIL_*` env vars).
+
+### Orders with multiple items
+
+`POST /api/orders/` accepts either the simple fields (`flavour`, `quantity`) or
+an `items` array, e.g.:
+
+```json
+{
+  "customer_name": "Neema", "phone": "0712345678",
+  "items": [
+    {"flavour": "Vanilla", "product_type": "cup", "quantity": 2},
+    {"flavour": "Mango", "product_type": "tub", "quantity": 1}
+  ]
+}
+```
+
+## Real contact facts
+
+Sourced from <https://familychoiceminimarket.co.tz/> and stored as site
+settings (editable in admin):
+
+| Setting | Value |
+| --- | --- |
+| phone / whatsapp | `+255 768 641 810` / `255768641810` |
+| email | `info@familychoiceminimarket.co.tz` |
+| location | `Mafiga Shell, Morogoro, Tanzania` |
+| opening hours | `Daily, 8:00 AM – 9:00 PM` |
+| parent business | `Family Choice Supermarket` |
+| delivery / pickup | flexible, arranged with the store / order ahead and collect |
 
 ## Configuration
 
@@ -75,7 +118,7 @@ and any `*.trycloudflare.com` share link.
 ## Tests
 
 ```bash
-python manage.py test      # 9 tests, all passing
+python manage.py test      # 12 tests, all passing
 ```
 
 ## Production
