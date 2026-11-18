@@ -19,6 +19,10 @@ built from the reference at
 All pages share the site's original fonts, colours and header/footer, default
 to **light mode**, and have no third-party badge.
 
+`assets/native-nav.js` forces nav links on the copied React pages to do a real
+page load, so clicking them opens the designed pages above instead of the
+reference build's "coming soon" placeholders.
+
 ## Run it
 
 ```bash
