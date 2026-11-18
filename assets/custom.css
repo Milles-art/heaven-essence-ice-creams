@@ -1,0 +1,56 @@
+/* Utilities used by the custom pages that aren't present in the original build. */
+.columns-2{columns:2}
+.break-inside-avoid{break-inside:avoid}
+.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.lg\:grid-cols-\[1\.3fr_1fr\]{grid-template-columns:1.3fr 1fr}
+.md\:columns-3{columns:3}
+.lg\:columns-4{columns:4}
+
+.p-5{padding:1.25rem}.px-8{padding-inline:2rem}.py-12{padding-block:3rem}
+.py-14{padding-block:3.5rem}.pb-5{padding-bottom:1.25rem}.pb-14{padding-bottom:3.5rem}
+.pb-20{padding-bottom:5rem}.pt-10{padding-top:2.5rem}.pt-16{padding-top:4rem}
+.mt-12{margin-top:3rem}.mb-4{margin-bottom:1rem}.mb-10{margin-bottom:2.5rem}
+.md\:gap-16{gap:4rem}.md\:p-16{padding:4rem}.md\:py-16{padding-block:4rem}
+.md\:py-24{padding-block:6rem}.md\:pb-20{padding-bottom:5rem}.md\:text-5xl{font-size:3rem;line-height:1.05}
+.-bottom-5{bottom:-1.25rem}.-top-3{top:-.75rem}.-right-3{right:-.75rem}
+.md\:-right-6{right:-1.5rem}.bottom-5{bottom:1.25rem}.left-5{left:1.25rem}.top-5{top:1.25rem}
+
+.size-11{width:2.75rem;height:2.75rem}.size-18{width:4.5rem;height:4.5rem}
+.size-22{width:5.5rem;height:5.5rem}.h-56{height:14rem}
+.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}
+.min-h-\[420px\]{min-height:420px}.max-h-\[80vh\]{max-height:80vh}
+.rounded-\[1\.75rem\]{border-radius:1.75rem}.z-\[100\]{z-index:100}
+.rotate-3{transform:rotate(3deg)}.opacity-80{opacity:.8}
+
+.text-white{color:#fff}.text-black{color:#000}
+.text-primary-foreground\/80{color:color-mix(in oklab,var(--color-primary-foreground) 80%,transparent)}
+.text-secondary-foreground\/75{color:color-mix(in oklab,var(--color-secondary-foreground) 75%,transparent)}
+.bg-\[\#F3E7D3\]{background-color:#F3E7D3}
+.bg-black\/80{background-color:#000c}
+.bg-primary\/20{background-color:color-mix(in oklab,var(--color-primary) 20%,transparent)}
+.bg-primary-foreground\/20{background-color:color-mix(in oklab,var(--color-primary-foreground) 20%,transparent)}
+.bg-secondary-foreground\/5{background-color:color-mix(in oklab,var(--color-secondary-foreground) 5%,transparent)}
+.border-primary-foreground\/40{border-color:color-mix(in oklab,var(--color-primary-foreground) 40%,transparent)}
+.ring-secondary-foreground\/10{--tw-ring-color:color-mix(in oklab,var(--color-secondary-foreground) 10%,transparent)}
+.shadow-primary\/20{--tw-shadow-color:color-mix(in oklab,var(--color-primary) 20%,transparent)}
+.shadow-primary\/25{--tw-shadow-color:color-mix(in oklab,var(--color-primary) 25%,transparent)}
+.shadow-primary\/30{--tw-shadow-color:color-mix(in oklab,var(--color-primary) 30%,transparent)}
+.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);backdrop-filter:var(--tw-backdrop-blur)}
+
+.bg-gradient-to-t{background-image:linear-gradient(to top,var(--tw-gradient-stops,transparent,transparent))}
+.from-black\/60{--tw-gradient-from:#0009;--tw-gradient-stops:var(--tw-gradient-from),transparent}
+.from-black\/70{--tw-gradient-from:#000b;--tw-gradient-stops:var(--tw-gradient-from),transparent}
+.to-transparent{--tw-gradient-to:transparent;--tw-gradient-stops:var(--tw-gradient-from,transparent),transparent}
+
+.hover\:-translate-y-0\.5:hover{translate:0 -.125rem}
+.hover\:-translate-y-1:hover{translate:0 -.25rem}
+.hover\:scale-105:hover{scale:1.05}
+.hover\:shadow-xl:hover{box-shadow:0 20px 25px -5px #0000001a,0 8px 10px -6px #0000001a}
+.hover\:bg-primary\/85:hover{background-color:color-mix(in oklab,var(--color-primary) 85%,transparent)}
+.hover\:bg-primary-foreground\/10:hover{background-color:color-mix(in oklab,var(--color-primary-foreground) 10%,transparent)}
+.hover\:bg-secondary-foreground\/20:hover{background-color:color-mix(in oklab,var(--color-secondary-foreground) 20%,transparent)}
+.group:hover .group-hover\:opacity-100{opacity:1}
+
+@media (max-width:767px){.md\:grid-cols-3,.md\:columns-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
