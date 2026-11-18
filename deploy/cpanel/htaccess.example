@@ -1,0 +1,18 @@
+# Copy to public_html/.htaccess (remove the .example suffix)
+DirectoryIndex index.html
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|webp|woff2)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+ErrorDocument 404 /404.html

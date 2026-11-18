@@ -101,3 +101,8 @@ CORS_ALLOWED_ORIGINS = [o.strip() for o in os.environ.get(
     "CORS_ORIGINS", "http://localhost:4173,http://127.0.0.1:4173"
 ).split(",") if o.strip()]
 CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://.*\.trycloudflare\.com$"]
+
+# Required when the frontend posts to the API from another domain with sessions.
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.environ.get(
+    "CSRF_TRUSTED_ORIGINS", ""
+).split(",") if o.strip()]

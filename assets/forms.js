@@ -1,5 +1,10 @@
 /* Submit site forms to the Django API through the same-origin /api proxy. */
 (function () {
+  // On cPanel the API usually lives on a subdomain. The meta tag is patched
+  // at deploy time; when empty, requests stay same-origin (local / tunnel).
+  var baseMeta = document.querySelector('meta[name="heaven-api-base"]');
+  var API_BASE = ((baseMeta && baseMeta.getAttribute('content')) || '').replace(/\/$/, '');
+
   document.querySelectorAll('form[data-endpoint]').forEach(function (form) {
     var button = form.querySelector('[type="submit"]');
     var msg = form.querySelector('.form-msg');
@@ -23,7 +28,7 @@
       if (button) { button.disabled = true; button.textContent = 'Sending…'; }
       say('');
 
-      fetch(form.getAttribute('data-endpoint'), {
+      fetch(API_BASE + form.getAttribute('data-endpoint'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
