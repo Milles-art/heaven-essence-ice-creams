@@ -14,7 +14,7 @@ TMP="$(mktemp)"
 printf 'google-site-verification: %s\n' "$FILE" > "$TMP"
 
 for D in /home/afyabgzo/heavenessence.co.tz /home/afyabgzo/family-choice/backend/public; do
-  scp -o BatchMode=yes "$TMP" "afyaguard:${D}/${FILE}"
+  scp -o BatchMode=yes "$TMP" "afyaguard:${D}/${FILE}" && ssh -o BatchMode=yes afyaguard "chmod 644 ${D}/${FILE}"
 done
 
 rm -f "$TMP"
